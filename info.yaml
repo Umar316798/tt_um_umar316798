@@ -1,0 +1,8 @@
+project:
+  name: "Tiny Logic-Based Inference Classifier"
+  author: "Umar"
+  description: "A logic-based binary classifier using combinational gates to mimic simple AI decision-making."
+  language: "verilog"
+  files:
+    - src/project.v
+  top_module: "tt_um_umar316798"
