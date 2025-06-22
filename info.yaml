@@ -9,4 +9,5 @@ project:
   files:
     - src/project.v
   top_module: "tt_um_umar316798"
-  tiles: 1
+  tiles:
+    - 1
