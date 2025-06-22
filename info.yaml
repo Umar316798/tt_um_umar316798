@@ -1,4 +1,4 @@
-yaml_version: 1
+yaml_version: 6
 
 project:
   name: "Tiny Logic-Based Inference Classifier"
