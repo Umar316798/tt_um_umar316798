@@ -20,7 +20,7 @@ project:
 # Pin mappings
 pinout:
   # Inputs
-  N/A
+  "N/A"
   ui[1]: ""
   ui[2]: ""
   ui[3]: ""
