@@ -1,20 +1,15 @@
-# Makefile for pure Icarus Verilog simulation
-
-# Verilog sources
+# Variables
 SRC_DIR = $(PWD)/../src
 PROJECT_SOURCES = project.v
-TB_SOURCES = tb.v
+TESTBENCH = tb.v
 
-VERILOG_SOURCES = $(addprefix $(SRC_DIR)/,$(PROJECT_SOURCES)) $(TB_SOURCES)
+# Verilog files
+VERILOG_SOURCES = $(addprefix $(SRC_DIR)/,$(PROJECT_SOURCES)) $(TESTBENCH)
 
-# Build directory
-SIM_BUILD = sim_build/rtl
+# Build output
+SIM_OUT = sim.out
 
-# Top module
-TOPLEVEL = tb
-
-# Icarus Verilog compile and run
-sim:
-	mkdir -p $(SIM_BUILD)
-	iverilog -o $(SIM_BUILD)/sim.vvp -g2012 -s $(TOPLEVEL) $(VERILOG_SOURCES)
-	vvp $(SIM_BUILD)/sim.vvp
+# Icarus Verilog build and run
+all:
+	iverilog -o $(SIM_OUT) $(VERILOG_SOURCES)
+	vvp $(SIM_OUT)
