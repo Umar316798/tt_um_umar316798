@@ -20,9 +20,9 @@ project:
 # Pin mappings
 pinout:
   # Inputs
-  ui[0]: "N/A"
-  ui[1]: ""
-  ui[2]: ""
+  ui[0]: "motion"
+  ui[1]: "door"
+  ui[2]: "window"
   ui[3]: ""
   ui[4]: ""
   ui[5]: ""
@@ -30,7 +30,7 @@ pinout:
   ui[7]: ""
 
   # Outputs
-  uo[0]: ""
+  uo[0]: "alarm"
   uo[1]: ""
   uo[2]: ""
   uo[3]: ""
