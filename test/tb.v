@@ -1,28 +1,49 @@
-`default_nettype none
+so test.v should be default_nettype none
 
 module tb;
 
-  reg [2:0] ui_in;   // 3-bit input for motion, door, window
-  wire uo_out;       // output: alarm
+  // Inputs
+  reg [7:0] ui_in;
+  reg [7:0] uio_in;
+  reg clk;
+  reg ena;
+  reg rst_n;
 
-  // Instantiate your design
+  // Outputs
+  wire [7:0] uo_out;
+  wire [7:0] uio_out;
+  wire [7:0] uio_oe;
+
+  // Instantiate your wrapped module
   tt_um_umar316798 uut (
     .ui_in(ui_in),
-    .uo_out(uo_out)
+    .uo_out(uo_out),
+    .uio_in(uio_in),
+    .uio_out(uio_out),
+    .uio_oe(uio_oe),
+    .clk(clk),
+    .ena(ena),
+    .rst_n(rst_n)
   );
 
   initial begin
+    // Dummy values for unused inputs
+    uio_in = 0;
+    clk = 0;
+    ena = 1;
+    rst_n = 1;
+
     $display("Time | motion door window | alarm");
 
-    // Try all meaningful cases:
-    ui_in = 3'b000; #10 $display("%4t |   %b   %b   %b |   %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out);
-    ui_in = 3'b001; #10 $display("%4t |   %b   %b   %b |   %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out);
-    ui_in = 3'b010; #10 $display("%4t |   %b   %b   %b |   %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out);
-    ui_in = 3'b011; #10 $display("%4t |   %b   %b   %b |   %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out);
-    ui_in = 3'b100; #10 $display("%4t |   %b   %b   %b |   %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out);
-    ui_in = 3'b101; #10 $display("%4t |   %b   %b   %b |   %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out);
-    ui_in = 3'b110; #10 $display("%4t |   %b   %b   %b |   %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out);
-    ui_in = 3'b111; #10 $display("%4t |   %b   %b   %b |   %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out);
+    // Only use the low bits for your logic
+    ui_in = 8'b00000000; #10 $display("%4t | %b %b %b | %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out[0]);
+    ui_in = 8'b00000001; #10 $display("%4t | %b %b %b | %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out[0]);
+    ui_in = 8'b00000010; #10 $display("%4t | %b %b %b | %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out[0]);
+    ui_in = 8'b00000011; #10 $display("%4t | %b %b %b | %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out[0]);
+    ui_in = 8'b00000100; #10 $display("%4t | %b %b %b | %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out[0]);
+    ui_in = 8'b00000101; #10 $display("%4t | %b %b %b | %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out[0]);
+    ui_in = 8'b00000110; #10 $display("%4t | %b %b %b | %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out[0]);
+    ui_in = 8'b00000111; #10 $display("%4t | %b %b %b | %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out[0]);
 
     $finish;
   end
