@@ -1,25 +1,18 @@
 # Tiny Tapeout project information
 project:
-  title:        "Tiny Logic-Based Inference Classifier"      # Project title
-  author:       "Umar"                                       # Your name
-  discord:      ""                                           # Optional: Your Discord username
-  description:  "A logic-based binary classifier using combinational gates to mimic simple AI decision-making."  # Description
-  language:     "Verilog"                                    # HDL used
-  clock_hz:     0                                            # No clock used (combinational logic)
-
-  # Tile size used — most projects use 1x1 unless explicitly needed
-  tiles: "1x1"                                               
-
-  # Must begin with "tt_um_"
-  top_module:  "tt_um_umar316798"                           
-
-  # List each source file located in ./src
+  title:        "Tiny Logic-Based Inference Classifier"      
+  author:       "Umar"
+  discord:      ""
+  description:  "A logic-based binary classifier using combinational gates to mimic simple AI decision-making."
+  language:     "Verilog"
+  clock_hz:     0                                           
+  tiles: "1x1"
+  top_module:  "tt_um_umar316798"
   source_files:
     - "project.v"
 
 # Pin mappings
 pinout:
-  # Inputs
   ui[0]: "motion"
   ui[1]: "door"
   ui[2]: "window"
@@ -29,7 +22,6 @@ pinout:
   ui[6]: ""
   ui[7]: ""
 
-  # Outputs
   uo[0]: "alarm"
   uo[1]: ""
   uo[2]: ""
@@ -39,7 +31,6 @@ pinout:
   uo[6]: ""
   uo[7]: ""
 
-  # Bidirectional pins
   uio[0]: ""
   uio[1]: ""
   uio[2]: ""
@@ -49,5 +40,4 @@ pinout:
   uio[6]: ""
   uio[7]: ""
 
-# Do not change!
 yaml_version: 6
