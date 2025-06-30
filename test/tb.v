@@ -1,4 +1,4 @@
-so test.v should be default_nettype none
+`default_nettype none
 
 module tb;
 
@@ -14,7 +14,7 @@ module tb;
   wire [7:0] uio_out;
   wire [7:0] uio_oe;
 
-  // Instantiate your wrapped module
+  // Instantiate your wrapped design under test (DUT)
   tt_um_umar316798 uut (
     .ui_in(ui_in),
     .uo_out(uo_out),
@@ -28,14 +28,14 @@ module tb;
 
   initial begin
     // Dummy values for unused inputs
-    uio_in = 0;
-    clk = 0;
-    ena = 1;
-    rst_n = 1;
+    uio_in = 8'b0;
+    clk = 1'b0;
+    ena = 1'b1;
+    rst_n = 1'b1;
 
     $display("Time | motion door window | alarm");
 
-    // Only use the low bits for your logic
+    // Stimulus: only using the low bits for your logic
     ui_in = 8'b00000000; #10 $display("%4t | %b %b %b | %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out[0]);
     ui_in = 8'b00000001; #10 $display("%4t | %b %b %b | %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out[0]);
     ui_in = 8'b00000010; #10 $display("%4t | %b %b %b | %b", $time, ui_in[0], ui_in[1], ui_in[2], uo_out[0]);
@@ -49,3 +49,4 @@ module tb;
   end
 
 endmodule
+
