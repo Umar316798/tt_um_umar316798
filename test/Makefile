@@ -1,5 +1,3 @@
-# test/Makefile
-
 export TOPLEVEL_LANG = verilog
 export TOPLEVEL = tb
 export MODULE = test_project
