@@ -3,20 +3,16 @@ SRC_DIR = $(PWD)/../src
 PROJECT_SOURCES = project.v
 TESTBENCH = tb.v
 
-# Verilog files
 VERILOG_SOURCES = $(addprefix $(SRC_DIR)/,$(PROJECT_SOURCES)) $(TESTBENCH)
 
-# Build output
-SIM_OUT = sim.out
+# Cocotb needs this env var set
+export TOPLEVEL_LANG = verilog
+export MODULE = test_project  # <-- this must match your test_*.py file name without .py
+export TOPLEVEL = tb
 
-# Default target
-all: test
-
-# Build & run simulation
+# Run test using pytest so we get results.xml
 test:
-	iverilog -o $(SIM_OUT) $(VERILOG_SOURCES)
-	vvp $(SIM_OUT)
+	pytest --junitxml=test/results.xml
 
-# Clean up
 clean:
-	rm -f $(SIM_OUT) *.vcd *.xml
+	rm -rf sim_build *.vcd *.out test/results.xml
