@@ -1,9 +1,18 @@
+PROJECT ?= tt_um_umar316798
+SRC = ./src
+TEST = ./test
+BUILD = ./build
+
 export TOPLEVEL_LANG = verilog
 export TOPLEVEL = tb
 export MODULE = test_project
 
+.PHONY: all clean lint test
+
+all: test
+
 test:
-	pytest --junitxml=results.xml
+	pytest --junitxml=$(TEST)/results.xml
 
 clean:
-	rm -rf sim_build *.vcd *.out results.xml
+	rm -rf $(BUILD) $(TEST)/results.xml
