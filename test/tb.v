@@ -14,7 +14,7 @@ module tb;
   wire [7:0] uio_out;
   wire [7:0] uio_oe;
 
-  // DUT instance
+  // DUT
   tt_um_umar316798 uut (
     .ui_in(ui_in),
     .uo_out(uo_out),
@@ -27,3 +27,4 @@ module tb;
   );
 
 endmodule
+
