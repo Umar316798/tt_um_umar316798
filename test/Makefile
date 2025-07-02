@@ -9,7 +9,14 @@ VERILOG_SOURCES = $(addprefix $(SRC_DIR)/,$(PROJECT_SOURCES)) $(TESTBENCH)
 # Build output
 SIM_OUT = sim.out
 
-# Icarus Verilog build and run
-all:
+# Default target
+all: test
+
+# Build & run simulation
+test:
 	iverilog -o $(SIM_OUT) $(VERILOG_SOURCES)
 	vvp $(SIM_OUT)
+
+# Clean up
+clean:
+	rm -f $(SIM_OUT) *.vcd *.xml
