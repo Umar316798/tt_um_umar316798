@@ -1,10 +1,11 @@
-# Required for Cocotb
+# test/Makefile
+
 export TOPLEVEL_LANG = verilog
-export MODULE = test_project   # test_project.py
-export TOPLEVEL = tb           # your tb.v
+export TOPLEVEL = tb
+export MODULE = test_project
 
 test:
-	pytest --junitxml=test/results.xml
+	pytest --junitxml=results.xml
 
 clean:
-	rm -rf sim_build *.vcd *.out test/results.xml
+	rm -rf sim_build *.vcd *.out results.xml
