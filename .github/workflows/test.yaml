@@ -26,11 +26,17 @@ jobs:
       run: sudo apt-get install -y iverilog
 
     - name: Run Cocotb tests
+      # The Makefile expects to be run from the project root.
+      # Remove 'cd test' if it was present, as it would cause path issues.
+      # Change 'make test' to 'make sim' as per the Makefile's target.
       run: |
-        cd test
-        make test
+        make sim # This will execute the 'sim' target in your Makefile
 
     - name: Publish test results
+      # The paths here should be relative to the root of the repository,
+      # which is where the 'results.xml' file is expected to be generated
+      # by the cocotb-run command if it's configured to output there.
+      # If your Makefile generates it elsewhere, adjust this path accordingly.
       uses: test-summary/action@v2.3
       with:
-        paths: test/results.xml
+        paths: results.xml # Assuming results.xml is generated in the root by cocotb-run
