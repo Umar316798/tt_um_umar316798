@@ -1,42 +1,47 @@
-name: Run Tests
-
-on:
-  push:
-  pull_request:
-
+name: test
+on: [push, workflow_dispatch]
 jobs:
   test:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-24.04
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.x'
+      - name: Install iverilog
+        shell: bash
+        run: sudo apt-get update && sudo apt-get install -y iverilog
 
-    - name: Install Python dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install cocotb pytest pytest-cocotb
+      # Set Python up and install cocotb
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
-    - name: Install Icarus Verilog
-      run: sudo apt-get install -y iverilog
+      - name: Install Python packages
+        shell: bash
+        run: pip install -r test/requirements.txt
 
-    - name: Run Cocotb tests
-      # The Makefile expects to be run from the project root.
-      # Remove 'cd test' if it was present, as it would cause path issues.
-      # Change 'make test' to 'make sim' as per the Makefile's target.
-      run: |
-        make sim # This will execute the 'sim' target in your Makefile
+      - name: Run tests
+        run: |
+          cd test
+          make clean
+          make
+          # make will return success even if the test fails, so check for failure in the results.xml
+          ! grep failure results.xml
 
-    - name: Publish test results
-      # The paths here should be relative to the root of the repository,
-      # which is where the 'results.xml' file is expected to be generated
-      # by the cocotb-run command if it's configured to output there.
-      # If your Makefile generates it elsewhere, adjust this path accordingly.
-      uses: test-summary/action@v2.3
-      with:
-        paths: results.xml # Assuming results.xml is generated in the root by cocotb-run
+      - name: Test Summary
+        uses: test-summary/action@v2.3
+        with:
+          paths: "test/results.xml"
+        if: always()
+
+      - name: upload vcd
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-vcd
+          path: |
+            test/tb.vcd
+            test/results.xml
