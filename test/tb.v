@@ -15,7 +15,7 @@ module tb;
   wire [7:0] uio_oe;
 
   // DUT
-  tt_um_umar316798 uut (
+  tt_um_umar316798 user_project (
     .ui_in(ui_in),
     .uo_out(uo_out),
     .uio_in(uio_in),
