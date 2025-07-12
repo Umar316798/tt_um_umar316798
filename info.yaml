@@ -11,7 +11,7 @@ project:
   source_files:
     - "project.v"
 
-# Pin mappings
+# Input pins
 pinout:
   ui[0]: "motion"
   ui[1]: "door"
@@ -21,13 +21,13 @@ pinout:
   ui[5]: ""
   ui[6]: ""
   ui[7]: ""
-
-  uo[0]: "alarm"
-  uo[1]: ""
-  uo[2]: ""
-  uo[3]: ""
-  uo[4]: ""
-  uo[5]: ""
+# Output pins
+   uo[0]: "alarm"
+  uo[1]: "hsync"
+  uo[2]: "vsync"
+  uo[3]: "red"
+  uo[4]: "green"
+  uo[5]: "blue"
   uo[6]: ""
   uo[7]: ""
 
