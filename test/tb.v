@@ -1,6 +1,13 @@
 `default_nettype none
 
-module tb;
+module tb ();
+
+    initial begin
+    $dumpfile("tb.vcd");
+    $dumpvars(0, tb);
+    #1;
+  end
+
 
   // Inputs
   reg [7:0] ui_in;
