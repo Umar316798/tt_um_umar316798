@@ -28,25 +28,31 @@ It takes six binary inputs:
 You can run the Verilog testbench to apply different input combinations. 
 Example test cases: 
 
-motion = 1, door = 1, armed = 1 → alarm triggers (Magenta) 
+• motion = 1, door = 1, armed = 1 → alarm triggers (Magenta) 
 
-window = 1 → alarm triggers (Yellow) 
+• window = 1 → alarm triggers (Yellow) 
 
-all inputs = 0 → no alarm (Black) 
+• all inputs = 0 → no alarm (Black) 
 
-temperature = 1 → high temp warning (White) 
+• temperature = 1 → high temp warning (White) 
 
-reset = 1 → system enters idle/reset state (Black) 
+• reset = 1 → system enters idle/reset state (Black) 
 
-The VGA output color will change based on the current state to help visualize the system status.
+• The VGA output color will change based on the current state to help visualize the system status.
 
 
 ## External hardware
 
 No external hardware is required, but in a real-world use case, the following could be connected: 
-motion sensor 
-door/window 
-switches 
-temperature sensor 
-system control buttons (armed/reset)
-VGA monitor to show output colors
+
+• motion sensor 
+
+• door/window 
+
+• switches 
+
+• temperature sensor 
+
+• system control buttons (armed/reset)
+
+• VGA monitor to show output colors
