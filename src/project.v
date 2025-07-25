@@ -12,12 +12,12 @@ module tt_um_umar316798 (
   input  wire rst_n           
 );
 
-  wire armed       = ui_in[0];
-  wire door        = ui_in[1];
-  wire window      = ui_in[2];
-  wire reset_input = ui_in[3]; 
-  wire motion      = ui_in[4];
-  wire temperature = ui_in[5];
+  wire Switch_0    = ui_in[0];
+  wire Switch_1    = ui_in[1];
+  wire Switch_2    = ui_in[2];
+  wire Switch_3    = ui_in[3]; 
+  wire Switch_4    = ui_in[4];
+  wire Switch_5    = ui_in[5];
 
   wire hsync;        // Horizontal sync signal from hvsync_generator
   wire vsync;        // Vertical sync signal from hvsync_generator
