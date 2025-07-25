@@ -1,11 +1,11 @@
 project:
-  title: "Tiny Logic-Based Inference Classifier"
+  title: "Tiny Logic‑Based Inference Classifier"
   author: "Umar"
   discord: ""
-  description: "A logic-based binary classifier using combinational gates to mimic simple AI decision-making."
+  description: "A logic‑based binary classifier using combinational gates to mimic simple AI decision‑making."
   language: "Verilog"
   clock_hz: 0
-  tiles: "1x1"
+  tiles: 1
   top_module: "tt_um_umar316798"
   source_files:
     - "project.v"
