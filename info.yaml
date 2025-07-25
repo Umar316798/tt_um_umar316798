@@ -12,12 +12,12 @@ project:
     - "hvsync_generator.v" 
 
 pinout:
-  ui[0]: "armed"
-  ui[1]: "door"
-  ui[2]: "window"
-  ui[3]: "reset"
-  ui[4]: "motion"
-  ui[5]: "temperature"
+  ui[0]: "Switch 0"
+  ui[1]: "Switch 1"
+  ui[2]: "Switch 2"
+  ui[3]: "Switch 4"
+  ui[4]: "Switch 3"
+  ui[5]: ""
   ui[6]: ""
   ui[7]: ""
 
