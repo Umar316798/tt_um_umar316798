@@ -1,75 +1,84 @@
-
 `default_nettype none
 
 module tt_um_umar316798 (
-  input  wire [7:0] ui_in,    
-  output wire [7:0] uo_out,   
-  input  wire [7:0] uio_in,   
-  output wire [7:0] uio_out,  
-  output wire [7:0] uio_oe,   
-  input  wire clk,            
-  input  wire ena,           
-  input  wire rst_n           
+    input  wire [7:0] ui_in,
+    output wire [7:0] uo_out,
+    input  wire [7:0] uio_in,
+    output wire [7:0] uio_out,
+    output wire [7:0] uio_oe,
+    input  wire clk,
+    input  wire ena,
+    input  wire rst_n
 );
 
-  wire Switch_0    = ui_in[0];
-  wire Switch_1    = ui_in[1];
-  wire Switch_2    = ui_in[2];
-  wire Switch_3    = ui_in[3]; 
-  wire Switch_4    = ui_in[4];
-  wire Switch_5    = ui_in[5];
+    // --- Input Aliases (directly matching your Verilog declarations) ---
+    // These correspond to the ui_in pins as defined in your project.v
+    wire Switch_0 = ui_in[0];
+    wire Switch_1 = ui_in[1];
+    wire Switch_2 = ui_in[2];
+    wire Switch_3 = ui_in[3]; // Based on your 'project.v' original wire declarations
+    wire Switch_4 = ui_in[4]; // Based on your 'project.v' original wire declarations
+    wire Switch_5 = ui_in[5]; // Based on your 'project.v' original wire declarations
 
-  wire hsync;        // Horizontal sync signal from hvsync_generator
-  wire vsync;        // Vertical sync signal from hvsync_generator
-  reg [1:0] R;       // 2-bit Red color component (declared as reg for always block assignment)
-  reg [1:0] G;       // 2-bit Green color component (declared as reg for always block assignment)
-  reg [1:0] B;       // 2-bit Blue color component (declared as reg for always block assignment)
-  wire video_active; // Indicates when the pixel is within the active display area
-  wire [9:0] pix_x;  // Current horizontal pixel coordinate (0-639)
-  wire [9:0] pix_y;  // Current vertical pixel coordinate (0-479)
+    // --- VGA and Color Signals ---
+    wire hsync;
+    wire vsync;
+    reg  [1:0] R;
+    reg  [1:0] G;
+    reg  [1:0] B;
+    wire video_active;
+    wire [9:0] pix_x;
+    wire [9:0] pix_y;
 
-  hvsync_generator hvsync_gen(
-    .clk(clk),
-    .reset(~rst_n),      // Global active-low reset is inverted for hvsync_generator
-    .hsync(hsync),
-    .vsync(vsync),
-    .display_on(video_active),
-    .hpos(pix_x),
-    .vpos(pix_y)
-  );
+    // --- VGA Timing Generator ---
+    hvsync_generator hvsync_gen (
+        .clk(clk),
+        .reset(~rst_n), // Invert active-low reset for the generator
+        .hsync(hsync),
+        .vsync(vsync),
+        .display_on(video_active),
+        .hpos(pix_x),
+        .vpos(pix_y)
+    );
 
- 
-  wire _unused_pix_x = pix_x;
-  wire _unused_pix_y = pix_y;
+    // --- Output Assignments ---
+    assign uo_out = {hsync, B[0], G[0], R[0], vsync, B[1], G[1], R[1]};
+    assign uio_out = 8'h00;
+    assign uio_oe  = 8'h00;
 
-  assign uo_out = {hsync, B[0], G[0], R[0], vsync, B[1], G[1], R[1]};
+    // --- Color Logic using Switch_X names ---
+    // This logic directly uses the Switch_X names that you've declared.
+    // It assumes the following mapping based on your *original code's comments*:
+    // Switch_0 = armed (ui_in[0])
+    // Switch_1 = door (ui_in[1])
+    // Switch_2 = window (ui_in[2])
+    // Switch_3 = reset_input (ui_in[3])
+    // Switch_4 = motion (ui_in[4])
+    // Switch_5 = temperature (ui_in[5])
 
+    always @(*) begin
+        // Default to black
+        R = 2'b00;
+        G = 2'b00;
+        B = 2'b00;
 
-  always @(*) begin
-    R = 2'b00; G = 2'b00; B = 2'b00; // Default: Black
-
-    if (video_active) begin // Only update colors if we are in the active display area
-      if (reset_input) begin // Condition 1: Highest priority - Manual reset (ui_in[3])
-        R = 2'b00; G = 2'b00; B = 2'b00; // Black (System enters idle/reset state)
-      end else if (temperature) begin // Condition 2: High temperature warning (ui_in[5])
-        R = 2'b11; G = 2'b11; B = 2'b11; // White (High Temp Warning)
-      end else if (window) begin // Condition 3: Window open (ui_in[2])
-        R = 2'b11; G = 2'b11; B = 2'b00; // Yellow (Alarm triggers due to window)
-      end else if (motion && door && armed) begin // Condition 4: Motion AND Door AND Armed (ui_in[4], ui_in[1], ui_in[0])
-        R = 2'b11; G = 2'b00; B = 2'b11; // Magenta (Alarm triggers due to motion/door while armed)
-      end else begin
-        
-        R = 2'b00; G = 2'b00; B = 2'b00; 
-      end
+        // Only update colors if display is active and not manually reset
+        if (video_active && !Switch_3) begin // Assuming Switch_3 is your reset
+            if (Switch_5) begin // Assuming Switch_5 is your temperature sensor
+                R = 2'b11; G = 2'b11; B = 2'b11; // White (High Temp Warning)
+            end else if (Switch_2) begin // Assuming Switch_2 is your window sensor
+                R = 2'b11; G = 2'b11; B = 2'b00; // Yellow (Window Alarm)
+            end else if (Switch_4 && Switch_1 && Switch_0) begin // Assuming Switch_4=motion, Switch_1=door, Switch_0=armed
+                R = 2'b11; G = 2'b00; B = 2'b11; // Magenta (Armed Intrusion)
+            end
+            // If none of the above conditions met, it remains black (from default)
+        end
     end
 
-  end
-
- 
-  assign uio_out = 8'b00000000;
-  assign uio_oe  = 8'b00000000; 
-
-  wire _unused_ok = ena; // 'ena' is always 1, so it's often unused directly.
-  wire _unused_uio_in = uio_in; // 'uio_in' is not used in this design.
+    // --- Unused Signal Tie-offs ---
+    wire _unused_ok = ena;
+    wire _unused_uio_in = uio_in[7:0];
+    wire _unused_pix_x = pix_x;
+    wire _unused_pix_y = pix_y;
 
 endmodule
