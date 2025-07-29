@@ -8,38 +8,43 @@ You can also include images in this folder and reference them in the markdown. E
 -->
 
 ## How it works
-This project is a simple logic-based binary classifier that acts as a smart alarm trigger.
+This project implements a simple logic-based binary classifier that acts as a smart alarm system with visual feedback. 
 
-It takes six binary inputs: 
+It processes inputs from six digital switches: 
 
-•	armed – system is armed and ready
+•	Switch_0: Corresponds to the "armed" state, indicating if the system is active. 
 
-•	reset – manually resets the system 
+•	Switch_1: Corresponds to a "door" sensor, detecting if a door is open. 
 
-•	motion – detects if motion is present 
+•	Switch_2: Corresponds to a "window" sensor, detecting if a window is open. 
 
-•	door – detects if a door is open 
+•	Switch_3: Corresponds to a "reset" signal, for manually resetting the system to an idle state. 
 
-•	window – detects if a window is open 
+•	Switch_4: Corresponds to a "motion" sensor, detecting presence. 
 
-•	temperature – detects high temperature
+•	Switch_5: Corresponds to a "temperature" sensor, indicating a high-temperature warning.
+
+The system's status is then output as a color to a VGA display.
+
+
 
 ## How to test
 You can run the Verilog testbench to apply different input combinations. 
 Example test cases: 
 
-• motion = 1, door = 1, armed = 1 → alarm triggers (Magenta) 
+## How to test
+You can run the Verilog testbench (e.g., using Cocotb) to apply different combinations to the ui_in pins (represented by Switch_0 through Switch_5) and observe the VGA output colors.
+Example test cases:
 
-• window = 1 → alarm triggers (Yellow) 
+•	Switch_4 = 1 (Motion), Switch_1 = 1 (Door), and Switch_0 = 1 (Armed): The alarm triggers, and the VGA output will be Magenta.
 
-• all inputs = 0 → no alarm (Black) 
+•	Switch_2 = 1 (Window): An alarm triggers due to an open window, resulting in a Yellow VGA output.
 
-• temperature = 1 → high temp warning (White) 
+•	All Switches = 0: The system is idle, and there is no alarm, resulting in a Black VGA output.
 
-• reset = 1 → system enters idle/reset state (Black) 
+•	Switch_5 = 1 (Temperature): A high-temperature warning is issued, showing a White VGA output.
 
-• The VGA output color will change based on the current state to help visualize the system status.
-
+•	Switch_3 = 1 (Reset): The system enters an idle/reset state, displaying a Black VGA output (overriding other alarms).
 
 ## External hardware
 
