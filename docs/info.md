@@ -6,6 +6,7 @@ sections.
 You can also include images in this folder and reference them in the markdown. Each image must be less than
 512 kb in size, and the combined size of all images must be less than 1 MB.
 -->
+# Game Of Life - (John Conway) remake on ASIC
 
 ## How it works
 This project implements a simple logic-based binary classifier that acts as a smart alarm system with visual feedback. 
