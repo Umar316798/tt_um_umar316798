@@ -34,4 +34,3 @@ module tb (
     end
 
 endmodule
-
